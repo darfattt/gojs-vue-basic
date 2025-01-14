@@ -1,6 +1,8 @@
 <script setup>
 import { ref } from 'vue'
-import Diagram from './components/Diagram.vue'
+//import Diagram from './components/Diagram.vue'
+import Planogram from './components/Planogram.vue'
+import PlanogramEditor from './components/PlanogramEditor.vue'
 
 const nda = [
   { key: 1, text: "Alpha", color: "lightblue" },
@@ -21,11 +23,19 @@ const moves = ref(0);
 
 <template>
   <main>
-    <Diagram
+    <!-- <Diagram
       :node-data-array="nda"
       :link-data-array="lda"
       @selection-moved="moves++"
       />
-    #moves: {{ moves }}
+    #moves: {{ moves }} -->
+    <Planogram
+      :node-data-array="nda"
+      :link-data-array="lda"
+      @selection-moved="moves++"
+      />
+<!-- <hr/>
+      <PlanogramEditor
+      /> -->
   </main>
 </template>
