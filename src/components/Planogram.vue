@@ -58,6 +58,8 @@ const initDiagram = () => {
         },
         "animationManager.isEnabled": false,
         "undoManager.isEnabled": true,
+        //resizingTool: new CustomResizingTool()
+
       });
 
       // Define templates (Nodes, Groups, Palettes)
@@ -121,7 +123,6 @@ const initDiagram = () => {
 
       myPaletteSmall = createPalette(paletteSmallDiv.value, myDiagram.nodeTemplate, myDiagram.groupTemplate, [
         { key: "g", color: green,source: product1ImgUrl,showImage: true },
-        // { key: "b", color: blue,source: product2ImgUrl,showImage: true  },
         { key: "y", color: yellow,source: product3ImgUrl ,showImage: true },
       ]);
 
@@ -247,7 +248,6 @@ const initDiagram = () => {
 
 <template>
     <h1>Planogram App</h1>
-    <img alt="Tes" src="../assets/img1.png">
     <img alt="Tes" src="https://placehold.co/50">
     
     <div ref="planogram" class="goPlanogram"></div>
