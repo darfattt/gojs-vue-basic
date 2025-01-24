@@ -33,9 +33,11 @@ onMounted(function () {
   console.log("On Mounted");
   initDiagram();
 })
+
 onUnmounted(function () {
   if (myDiagram) myDiagram.div = null;
 })
+
 const initDiagram = () => {
   const CellSize = new go.Size(50, 50);
   const groupSectionFill = "rgba(128,128,128,0.2)";
@@ -186,7 +188,7 @@ const initDiagram = () => {
     { key: "Section", isGroup: true, isShelf: false, size: "200 400" },
   ]);
   myShelfe = createPalette(shelfeDiv.value, myDiagram.nodeTemplate, myDiagram.groupTemplate, [
-    { key: "Shelfe", isGroup: true, isShelf: true, color: white, size: "200 100" },
+    { key: "Shelf", isGroup: true, isShelf: true, color: white, size: "200 100" },
   ]);
 };
 
@@ -332,6 +334,46 @@ function toggleImageForAll() {
   myDiagram.model.commitTransaction("toggleImageForAll");
 }
 
+
+function loadModel() {
+
+  const modelAsText = JSON.stringify({
+    class: "GraphLinksModel",
+    nodeDataArray: [
+      { key: "Section", isGroup: true, isShelf: false, size: "200 400", pos: "-100 -200" },
+      { key: "Shelfe", isGroup: true, isShelf: true, color: "#FFFFFF", size: "200 150", pos: "-100 50", group: "Section" },
+      { key: "y", color: "#FFEB3B", source: "/src/assets/golda.png", showImage: true, pos: "-100 150", group: "Shelfe" },
+      { key: "y2", color: "#FFEB3B", source: "/src/assets/golda.png", showImage: true, pos: "-100 100", group: "Shelfe" },
+      { key: "y3", color: "#FFEB3B", source: "/src/assets/golda.png", showImage: true, pos: "-100 50", group: "Shelfe" },
+      { key: "y4", color: "#FFEB3B", source: "/src/assets/golda.png", showImage: true, pos: "-50 150", group: "Shelfe" },
+      { key: "y5", color: "#FFEB3B", source: "/src/assets/golda.png", showImage: true, pos: "-50 100", group: "Shelfe" },
+      { key: "y6", color: "#FFEB3B", source: "/src/assets/golda.png", showImage: true, pos: "0 150", group: "Shelfe" },
+      { key: "Shelfe2", isGroup: true, isShelf: true, color: "#FFFFFF", size: "200 200", pos: "-100 -200", group: "Section" },
+      { key: "g", color: "#B2FF59", source: "/src/assets/cola.png", showImage: true, pos: "-100 -50", group: "Shelfe2" },
+      { key: "g2", color: "#B2FF59", source: "/src/assets/cola.png", showImage: true, pos: "-50 -50", group: "Shelfe2" },
+      { key: "g3", color: "#B2FF59", source: "/src/assets/cola.png", showImage: true, pos: "-100 -100", group: "Shelfe2" },
+      { key: "g4", color: "#B2FF59", source: "/src/assets/cola.png", showImage: true, pos: "-50 -100", group: "Shelfe2" },
+      { key: "g42", color: "#B2FF59", source: "/src/assets/cola.png", showImage: true, pos: "-50 -150", group: "Shelfe2" },
+      { key: "g43", color: "#B2FF59", source: "/src/assets/cola.png", showImage: true, pos: "-50 -200", group: "Shelfe2" },
+      { key: "g44", color: "#B2FF59", source: "/src/assets/cola.png", showImage: true, pos: "0 -50", group: "Shelfe2" },
+      { key: "g45", color: "#B2FF59", source: "/src/assets/cola.png", showImage: true, pos: "0 -100", group: "Shelfe2" },
+      { key: "g46", color: "#B2FF59", source: "/src/assets/cola.png", showImage: true, pos: "0 -150", group: "Shelfe2" },
+      { key: "g47", color: "#B2FF59", source: "/src/assets/cola.png", showImage: true, pos: "0 -200", group: "Shelfe2" }
+    ],
+    linkDataArray: []
+  });
+
+  if (myDiagram.isInTransaction) {
+    myDiagram.commitTransaction("Existing transaction committed");
+  }
+
+  // Replace the diagram model
+  myDiagram.model = go.Model.fromJson(modelAsText);
+
+  // Commit the transaction
+ // myDiagram.commitTransaction("Initialize Model");
+}
+
 </script>
 
 <template>
@@ -355,7 +397,10 @@ function toggleImageForAll() {
         </div>
       </div>
       <div>
-        <button @click="toggleImageForAll">Toggle Images for All Nodes</button>
+        <button @click="toggleImageForAll">Live Image</button>
+      </div>
+      <div>
+        <button @click="loadModel">Load Model</button>
       </div>
       <p>Saved Model:</p>
       <pre>{{ savedModel }}</pre>
